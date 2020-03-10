@@ -1,2 +1,7 @@
-# Personal GIT                                                                                                 
-export PATH=/Users/rvooda/Personal/git:$PATH
+# Personal GIT
+export RRPersonal=/Users/ravivooda/Code/Personal
+export PATH=$RRPersonal/git:$PATH
+
+personal() {
+    cd $RRPersonal
+}
