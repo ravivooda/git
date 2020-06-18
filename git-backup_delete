@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# My own code
+
+source git-commond
+
+function main {
+    local branch id
+    branch=$(git rev-parse --abbrev-ref HEAD) || return
+
+    if [[ "${branch}" == "HEAD" ]] ; then
+        echo "There is no branch on HEAD" >&2
+        return 1
+    fi
+
+    n=$(git branch | grep "${branch}")
+
+    while true; do
+	echo "Delete branches?"
+	echo "${n[@]}"
+	read -p "y/n? " yn
+	case $yn in
+            [Yy]* ) echo "Will delete!!!"; break;;
+	    [Nn]* ) exit;;
+            * ) echo "Please answer yes or no.";;
+	esac
+    done
+
+    git checkout master || { echo "Unable to check into master";  return 1; }
+
+    git branch | grep "${branch}" | xargs git branch -D || { echo "Error occurred while deleting";  return 1; }
+}
+
+
+main
